@@ -62,7 +62,7 @@ namespace LoginReg.Controllers
         {
             if(HttpContext.Session.GetInt32("UserId") == null)
             {
-                return RedirectToAction("Logout");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -90,14 +90,14 @@ namespace LoginReg.Controllers
 
             if (ModelState.IsValid == false)
             {
-                return View("Login");
+                return View("Index");
             }
 
             User dbUser = _context.Users.FirstOrDefault( u => u.Email == loginUser.LoginEmail );
 
-            if( _context == null)
+            if( dbUser == null)
             {
-                ModelState.AddModelError("Login Email", myErrorMsg);
+                ModelState.AddModelError("LoginEmail", myErrorMsg);
             }
             else
             {
@@ -113,7 +113,7 @@ namespace LoginReg.Controllers
 
             if(ModelState.IsValid == false)
             {
-                return View("Login");
+                return View("Index");
             }
             
             HttpContext.Session.SetInt32("UserId", dbUser.UserId);
